@@ -15,7 +15,8 @@
   "main": "index.js",
   "devDependencies": {},
   "scripts": {
-    "dev": "nodemon index.js"
+    "dev": "nodemon main-Server/index.js",
+    "auth": "nodemon auth-Server/auth.js"
   },
   "keywords": [],
   "author": "",

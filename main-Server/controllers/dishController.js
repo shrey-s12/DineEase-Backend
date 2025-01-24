@@ -1,4 +1,4 @@
-const Dish = require('../model/dishModel');
+const Dish = require('../../model/dishModel');
 
 // Get all dishes
 const getAllDishes = async (req, res) => {

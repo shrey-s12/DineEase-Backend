@@ -1,4 +1,4 @@
-const Counter = require('../model/counterModel');
+const Counter = require('../../model/counterModel');
 
 // Get all counters
 const getAllCounters = async (req, res) => {

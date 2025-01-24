@@ -3,7 +3,7 @@ dotenv.config();
 
 const express = require('express');
 const cors = require('cors');
-require('./config/connection');
+require('../config/connection');
 const CartRouter = require('./routes/cartRouter');
 const CounterRouter = require('./routes/counterRouter');
 const DishRouter = require('./routes/dishRouter');

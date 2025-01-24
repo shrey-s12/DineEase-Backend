@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const { validateObjectId } = require('../middleware');
+const { validateObjectId, validateMerchantIds } = require('../middleware');
 const {
     getAllCounters,
     getCounterById,
@@ -11,7 +11,7 @@ const {
 
 router.get("/", getAllCounters);
 router.get("/:id", validateObjectId, getCounterById);
-router.post("/", createCounter);
+router.post("/", validateMerchantIds, createCounter);
 router.put(":id", validateObjectId, updateCounter);
 router.delete("/:id", validateObjectId, deleteCounter);
 

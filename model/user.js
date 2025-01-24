@@ -1,0 +1,24 @@
+const mongoose = require('mongoose');
+const Schema = mongoose.Schema;
+
+const CartItemSchema = new Schema({
+    dish: {
+        type: Schema.Types.ObjectId,
+        ref: 'Dish',
+        required: true
+    },
+    quantity: { type: Number, required: true, min: [1, "Quantity must be atleast 1"] }
+});
+
+const UserSchema = new Schema({
+    image: { type: String },
+    name: { type: String, required: true },
+    email: { type: String, required: true, unique: true },
+    password: { type: String, required: true },
+    role: { type: String, enum: ['Customer', 'Merchant', 'Admin'], default: 'Customer', required: true },
+    cart: { type: [CartItemSchema] }
+});
+
+const User = mongoose.model('User', UserSchema);
+
+module.exports = User;

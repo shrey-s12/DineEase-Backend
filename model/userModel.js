@@ -11,7 +11,7 @@ const CartItemSchema = new Schema({
 });
 
 const UserSchema = new Schema({
-    image: { type: String },
+    image: { type: String, default: "https://res.cloudinary.com/dy88vophl/image/upload/v1732281036/b8gatghaiodpi0bjf9wd.png" },
     name: { type: String, required: true },
     email: { type: String, required: true, unique: true },
     password: { type: String, required: true },

@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const bcrypt = require('bcrypt');
 const User = require('../model/userModel');
-const validateObjectId = require('../middleware');
+const { validateObjectId } = require('../middleware');
 
 router.get("/", async (req, res) => {
     try {

@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const Counter = require('../model/counterModel');
-const validateObjectId = require('../middleware');
+const { validateObjectId } = require('../middleware');
 
 router.get("/", async (req, res) => {
     try {

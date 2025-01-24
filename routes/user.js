@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const bcrypt = require('bcrypt');
 const User = require('../model/userModel');
+const validateObjectId = require('../middleware');
 
 router.get("/", async (req, res) => {
     try {
@@ -12,7 +13,7 @@ router.get("/", async (req, res) => {
     }
 });
 
-router.get("/:id", async (req, res) => {
+router.get("/:id", validateObjectId, async (req, res) => {
     const { id } = req.params;
     try {
         const user = await User.findById(id).select('-cart -password');
@@ -46,7 +47,7 @@ router.post("/", async (req, res) => {
     }
 });
 
-router.put("/:id", async (req, res) => {
+router.put("/:id", validateObjectId, async (req, res) => {
     const { id } = req.params;
     const updateData = { ...req.body };
 
@@ -73,7 +74,7 @@ router.put("/:id", async (req, res) => {
     }
 });
 
-router.delete("/:id", async (req, res) => {
+router.delete("/:id", validateObjectId, async (req, res) => {
     const { id } = req.params;
     try {
         const user = await User.findByIdAndDelete(id);

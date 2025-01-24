@@ -4,10 +4,10 @@ dotenv.config();
 const express = require('express');
 const cors = require('cors');
 require('./config/connection');
-const CartRouter = require('./routes/Cart');
-const CounterRouter = require('./routes/Counter');
-const DishRouter = require('./routes/dish');
-const UserRouter = require('./routes/user');
+const CartRouter = require('./routes/cartRouter');
+const CounterRouter = require('./routes/counterRouter');
+const DishRouter = require('./routes/dishRouter');
+const UserRouter = require('./routes/userRouter');
 
 const PORT1 = process.env.PORT1; // 5000
 const app = express();

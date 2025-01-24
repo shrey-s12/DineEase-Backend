@@ -12,15 +12,13 @@ const UserRouter = require('./routes/user');
 const PORT1 = process.env.PORT1; // 5000
 const app = express();
 
+app.use(express.json());
+app.use(cors());
+
 app.use('/cart', CartRouter);
 app.use('/counter', CounterRouter);
 app.use('/dish', DishRouter);
 app.use('/user', UserRouter);
-
-app.use(express.json());
-app.use(cors());
-
-
 
 app.listen(PORT1, () => {
     console.log(`Server is running on port ${PORT1}`);

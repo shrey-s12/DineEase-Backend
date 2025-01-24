@@ -1,3 +1,5 @@
+const mongoose = require('mongoose');
+
 // Middleware to validate MongoDB ObjectID
 export const validateObjectId = (req, res, next) => {
     const { id } = req.params;

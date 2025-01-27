@@ -31,8 +31,10 @@ const getDishesByCounterId = async (req, res) => {
     const { counterId } = req.params;
 
     try {
-        const dishes = await Dish.find({ counter: counterId }).populate('counter');
-
+        const dishes = await Dish.find({ counter: counterId }).populate({
+            path: 'counter',
+            populate: { path: 'merchants' }
+        });
         if (dishes.length === 0) {
             return res.status(404).json({ message: "No dishes found for this counter" });
         }

@@ -7,7 +7,7 @@ const CartItemSchema = new Schema({
         ref: 'Dish',
         required: true
     },
-    quantity: { type: Number, required: true, min: [1, "Quantity must be atleast 1"] }
+    quantity: { type: Number, default: 1 }
 });
 
 const UserSchema = new Schema({

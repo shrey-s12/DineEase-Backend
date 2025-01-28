@@ -25,6 +25,16 @@ const getUserById = async (req, res) => {
     }
 };
 
+// Get all the merchants
+const getMerchants = async (req, res) => {
+    try {
+        const merchants = await User.find({ role: 'Merchant' });
+        res.status(200).json(merchants);
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+};
+
 // Create a new user
 const createUser = async (req, res) => {
     const { image, name, email, password, role } = req.body;
@@ -84,6 +94,7 @@ const deleteUser = async (req, res) => {
 module.exports = {
     getAllUsers,
     getUserById,
+    getMerchants,
     createUser,
     updateUser,
     deleteUser

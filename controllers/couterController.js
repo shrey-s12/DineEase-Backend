@@ -3,7 +3,7 @@ const Counter = require('../model/counterModel');
 // Get all counters
 const getAllCounters = async (req, res) => {
     try {
-        const counters = await Counter.find();
+        const counters = await Counter.find().populate('merchants');
         res.status(200).json(counters);
     } catch (error) {
         res.status(500).json({ message: error.message });

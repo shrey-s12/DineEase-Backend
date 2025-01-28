@@ -56,7 +56,7 @@ router.get('/', async (req, res) => {
         const user = req.user;
         res.status(200).json(user);
     } catch (err) {
-        res.status(500).json({ message: "Error fetching cart details", error: err.message });
+        res.status(500).json(err.message);
     }
 });
 
@@ -76,7 +76,7 @@ router.post('/:dishId', async (req, res) => {
         await req.user.save().then(u => u.populate('cart.dish'));
         res.status(200).json(req.user.cart);
     } catch (err) {
-        res.status(500).json({ message: "Error adding dish to the cart", error: err.message });
+        res.status(500).json(err.message);
     }
 });
 
@@ -102,7 +102,7 @@ router.patch('/:dishId', async (req, res) => {
         await req.user.save().then(u => u.populate('cart.dish'));
         res.status(200).json(req.user.cart);
     } catch (err) {
-        res.status(500).json({ message: "Error updating cart item", error: err.message });
+        res.status(500).json(err.message);
     }
 });
 
@@ -118,9 +118,9 @@ router.delete('/:dishId', async (req, res) => {
 
         req.user.cart = req.user.cart.filter(item => item.dish.id !== dishId);
         await req.user.save();
-        res.status(200).json({ message: "Dish removed from the cart", cart: req.user.cart });
+        res.status(200).json(req.user.cart);
     } catch (err) {
-        res.status(500).json({ message: "Error removing dish from the cart", error: err.message });
+        res.status(500).json(err.message);
     }
 });
 
@@ -133,9 +133,9 @@ router.delete('/', async (req, res) => {
 
         req.user.cart = [];
         await req.user.save();
-        res.status(200).json({ message: "Cart cleared", cart: req.user.cart });
+        res.status(200).json(req.user.cart);
     } catch (err) {
-        res.status(500).json({ message: "Error clearing cart", error: err.message });
+        res.status(500).json(err.message);
     }
 });
 

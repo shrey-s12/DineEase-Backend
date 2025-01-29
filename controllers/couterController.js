@@ -14,7 +14,7 @@ const getAllCounters = async (req, res) => {
 const getCounterById = async (req, res) => {
     const { id } = req.params;
     try {
-        const counter = await Counter.findById(id);
+        const counter = await Counter.findById(id).populate('merchants');
         if (!counter) {
             return res.status(404).json({ message: 'Counter not found' });
         }

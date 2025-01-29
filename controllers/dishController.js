@@ -35,10 +35,6 @@ const getDishesByCounterId = async (req, res) => {
             path: 'counter',
             populate: { path: 'merchants' }
         });
-        if (dishes.length === 0) {
-            return res.status(404).json({ message: "No dishes found for this counter" });
-        }
-
         res.status(200).json(dishes);
     } catch (error) {
         res.status(500).json({ message: error.message });

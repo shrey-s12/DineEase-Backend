@@ -2,8 +2,15 @@ const Dish = require('../model/dishModel');
 
 // Get all dishes
 const getAllDishes = async (req, res) => {
+    const { inStock } = req.query;
     try {
         const dishes = await Dish.find().populate('counter');
+
+        if (inStock) {
+            const inStockDishes = dishes.filter(dish => dish.inStock);
+            return res.status(200).json(inStockDishes);
+        }
+
         res.status(200).json(dishes);
     } catch (error) {
         res.status(500).json({ message: error.message });

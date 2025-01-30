@@ -45,14 +45,15 @@
 
 const express = require('express');
 const router = express.Router();
-const User = require('../model/userModel');
+// const User = require('../model/userModel');
 
-// Middleware to authenticate and populate user
-router.use(auth);
+// // Middleware to authenticate and populate user
+// router.use(auth);
 
 // Get the cart details for the authenticated user
 router.get('/', async (req, res) => {
     try {
+        console.log("req.user", req.user);
         const user = req.user;
         res.status(200).json(user);
     } catch (err) {
@@ -139,20 +140,20 @@ router.delete('/', async (req, res) => {
     }
 });
 
-// Middleware to authenticate the user and populate the cart
-async function auth(req, res, next) {
-    try {
-        const id = "67937229db3ad7ada578cd50"; // Hardcoded user ID for now
-        const user = await User.findById(id).populate('cart.dish');
-        if (!user) {
-            return res.status(404).json({ message: "User not found" });
-        }
+// // Middleware to authenticate the user and populate the cart
+// async function auth(req, res, next) {
+//     try {
+//         const id = "67937229db3ad7ada578cd50"; // Hardcoded user ID for now
+//         const user = await User.findById(id).populate('cart.dish');
+//         if (!user) {
+//             return res.status(404).json({ message: "User not found" });
+//         }
 
-        req.user = user;
-        next();
-    } catch (err) {
-        res.status(500).json({ message: "Error authenticating user", error: err.message });
-    }
-}
+//         req.user = user;
+//         next();
+//     } catch (err) {
+//         res.status(500).json({ message: "Error authenticating user", error: err.message });
+//     }
+// }
 
 module.exports = router;

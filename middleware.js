@@ -41,9 +41,9 @@ const validateMerchantIds = async (req, res, next) => {
 };
 
 const authenticateToken = (req, res, next) => {
-    console.log("Header Token", req.headers);
     const authHeader = req.headers['authorization'];
     const token = authHeader && authHeader.split(' ')[1];
+
     if (!token) {
         return res.status(401).json({ message: "Unauthorized" });
     }
@@ -51,11 +51,8 @@ const authenticateToken = (req, res, next) => {
     jwt.verify(token, SECRET, async (err, userInfo) => {
         if (err) return res.status(403).json({ message: "Forbidden", error: err.message });
         // req.user = userInfo;
-        console.log("UserInfo", userInfo)
-
         try {
             const user = await User.findById(userInfo.user.id).populate('cart.dish');
-            console.log("authenticating user", user);
             if (!user) {
                 return res.status(404).json({ message: "User not found" });
             }

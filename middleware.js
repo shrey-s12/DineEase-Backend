@@ -1,5 +1,10 @@
+const dotenv = require('dotenv');
+dotenv.config();
+
 const mongoose = require('mongoose');
 const User = require('./model/userModel');
+const jwt = require('jsonwebtoken');
+const SECRET = process.env.ACCESS_TOKEN_SECRET;
 
 // Middleware to validate MongoDB ObjectID
 const validateObjectId = (req, res, next) => {
@@ -35,7 +40,35 @@ const validateMerchantIds = async (req, res, next) => {
     }
 };
 
+const authenticateToken = (req, res, next) => {
+    console.log("Header Token", req.headers);
+    const authHeader = req.headers['authorization'];
+    const token = authHeader && authHeader.split(' ')[1];
+    if (!token) {
+        return res.status(401).json({ message: "Unauthorized" });
+    }
+
+    jwt.verify(token, SECRET, async (err, userInfo) => {
+        if (err) return res.status(403).json({ message: "Forbidden", error: err.message });
+        // req.user = userInfo;
+        console.log("UserInfo", userInfo)
+
+        try {
+            const user = await User.findById(userInfo.user.id).populate('cart.dish');
+            console.log("authenticating user", user);
+            if (!user) {
+                return res.status(404).json({ message: "User not found" });
+            }
+            req.user = user;
+        } catch (error) {
+            res.status(500).json({ message: error.message });
+        }
+        next();
+    });
+}
+
 module.exports = {
     validateObjectId,
-    validateMerchantIds
+    validateMerchantIds,
+    authenticateToken
 }

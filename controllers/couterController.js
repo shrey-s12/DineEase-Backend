@@ -24,6 +24,20 @@ const getCounterById = async (req, res) => {
     }
 };
 
+// Get counters by merchant ID
+const getCountersByMerchantId = async (req, res) => {
+    const { id } = req.params;
+    try {
+        const counters = await Counter.find({ merchants: id }).populate('merchants');
+        if (!counters) {
+            return res.status(404).json({ message: 'Counters not found' });
+        }
+        res.status(200).json(counters);
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+};
+
 // Create a new counter
 const createCounter = async (req, res) => {
     const { image, name, description, merchants } = req.body;
@@ -80,6 +94,7 @@ const deleteCounter = async (req, res) => {
 module.exports = {
     getAllCounters,
     getCounterById,
+    getCountersByMerchantId,
     createCounter,
     updateCounter,
     deleteCounter,

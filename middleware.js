@@ -52,7 +52,7 @@ const authenticateToken = (req, res, next) => {
         if (err) return res.status(403).json({ message: "Forbidden", error: err.message });
         // req.user = userInfo;
         try {
-            const user = await User.findById(userInfo.user.id).populate('cart.dish');
+            const user = await User.findById(userInfo.user._id).populate('cart.dish');
             if (!user) {
                 return res.status(404).json({ message: "User not found" });
             }

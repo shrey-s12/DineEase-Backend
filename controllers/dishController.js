@@ -57,7 +57,7 @@ const getAllDishesByMerchantId = async (req, res) => {
         const counters = await Counter.find({ merchants: id }).select('_id');
         const counterIds = counters.map(counter => counter._id);
 
-        const dishes = await Dish.find({ counter: { $in: counterIds } });
+        const dishes = await Dish.find({ counter: { $in: counterIds } }).populate('counter');
 
         if (inStock) {
             const inStockDishes = dishes.filter(dish => dish.inStock);

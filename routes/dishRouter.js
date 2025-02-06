@@ -5,6 +5,7 @@ const {
     getAllDishes,
     getDishById,
     getDishesByCounterId,
+    getAllDishesByMerchantId,
     createDish,
     updateDish,
     deleteDish
@@ -13,6 +14,7 @@ const {
 router.get("/", getAllDishes);
 router.get("/:id", validateObjectId, getDishById);
 router.get("/counter/:counterId", validateObjectId, getDishesByCounterId);
+router.get("/merchant/:id", validateObjectId, getAllDishesByMerchantId);
 router.post("/", createDish);
 router.put("/:id", validateObjectId, updateDish);
 router.delete("/:id", validateObjectId, deleteDish);

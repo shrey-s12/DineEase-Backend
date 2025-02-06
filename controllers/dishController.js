@@ -1,3 +1,4 @@
+const Counter = require('../model/counterModel');
 const Dish = require('../model/dishModel');
 
 // Get all dishes
@@ -36,12 +37,32 @@ const getDishById = async (req, res) => {
 // Get dishes by counter ID
 const getDishesByCounterId = async (req, res) => {
     const { counterId } = req.params;
-
     try {
         const dishes = await Dish.find({ counter: counterId }).populate({
             path: 'counter',
             populate: { path: 'merchants' }
         });
+
+        res.status(200).json(dishes);
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+};
+
+// Get all dishes by merchant ID
+const getAllDishesByMerchantId = async (req, res) => {
+    const { id } = req.params; // Merchant ID
+    const { inStock } = req.query;
+    try {
+        const counters = await Counter.find({ merchants: id }).select('_id');
+        const counterIds = counters.map(counter => counter._id);
+
+        const dishes = await Dish.find({ counter: { $in: counterIds } });
+
+        if (inStock) {
+            const inStockDishes = dishes.filter(dish => dish.inStock);
+            return res.status(200).json(inStockDishes);
+        }
         res.status(200).json(dishes);
     } catch (error) {
         res.status(500).json({ message: error.message });
@@ -104,6 +125,7 @@ module.exports = {
     getAllDishes,
     getDishById,
     getDishesByCounterId,
+    getAllDishesByMerchantId,
     createDish,
     updateDish,
     deleteDish

@@ -19,12 +19,10 @@ app.use(cors({
     credentials: true
 }));
 
-app.use(authenticateToken);
-    
-app.use('/cart', CartRouter);
+app.use('/cart', authenticateToken, CartRouter);
 app.use('/counter', CounterRouter);
 app.use('/dish', DishRouter);
-app.use('/user', UserRouter);
+app.use('/user', authenticateToken, UserRouter);
 
 app.listen(MAIN_PORT, () => {
     console.log(`Server is running on port ${MAIN_PORT}`);

@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const { validateObjectId } = require('../middleware');
+const { validateObjectId, authenticateToken } = require('../middleware');
 const {
     getAllDishes,
     getDishById,
@@ -12,6 +12,8 @@ const {
 } = require('../controllers/dishController');
 
 router.get("/", getAllDishes);
+
+router.use(authenticateToken);
 router.get("/:id", validateObjectId, getDishById);
 router.get("/counter/:counterId", validateObjectId, getDishesByCounterId);
 router.get("/merchant/:id", validateObjectId, getAllDishesByMerchantId);

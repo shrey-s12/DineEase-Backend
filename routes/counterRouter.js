@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const { validateObjectId, validateMerchantIds } = require('../middleware');
+const { validateObjectId, validateMerchantIds, authenticateToken } = require('../middleware');
 const {
     getAllCounters,
     getCounterById,
@@ -11,6 +11,8 @@ const {
 } = require('../controllers/couterController');
 
 router.get("/", getAllCounters);
+
+router.use(authenticateToken);
 router.get("/:id", validateObjectId, getCounterById);
 router.get("/merchant/:id", validateObjectId, getCountersByMerchantId);
 router.post("/", validateMerchantIds, createCounter);
